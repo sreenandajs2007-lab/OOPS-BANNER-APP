@@ -1,9 +1,9 @@
 /**
  * OOPS Banner App
- * UC5: Refactored to use Inline Array Initialization for conciseness.
- * Combining declaration, initialization, and String.join() in one statement.
+ * UC6: Refactored to use Static Helper Methods for Modularization and Reusability.
+ * This version uses the DRY principle by defining letter patterns in methods.
  * * @author Your Name
- * @version 1.4
+ * @version 1.5
  */
 public class OOPSBannerApp {
 
@@ -18,26 +18,77 @@ public class OOPSBannerApp {
         System.out.println("\n");
 
         // ==========================================
-        // UC5: Render OOPS as Banner using Inline Array Initialization
-        // (Refactored from UC4 to be more concise and readable)
+        // UC6: Render OOPS as Banner using Functions (Refactored)
         // ==========================================
-        System.out.println("--- UC5: Banner Output (Inline Initialization) ---");
+        System.out.println("--- UC6: Banner Output (Modular Functions) ---");
 
-        // Using {} braces to initialize the array and populate it immediately.
-        // Each element calls String.join() to build the specific line.
+        // Array Initialization calling our helper methods
+        // Notice getOPattern() is called twice - Reusability in action!
         String[] bannerLines = {
-                String.join("", "  ***** ", "  ", "  ***** ", "  ", "******* ", "  ", "  ***** "),
-                String.join("", " * * ", "  ", " * * ", "  ", "* * ", "  ", " * * "),
-                String.join("", "* *", "  ", "* *", "  ", "* * ", "  ", "* "),
-                String.join("", "* *", "  ", "* *", "  ", "******* ", "  ", "  ***** "),
-                String.join("", "* *", "  ", "* *", "  ", "* ", "  ", "       * "),
-                String.join("", " * * ", "  ", " * * ", "  ", "* ", "  ", " * * "),
-                String.join("", "  ***** ", "  ", "  ***** ", "  ", "* ", "  ", "  ***** ")
+                String.join("  ", getOPattern(0), getOPattern(0), getPPattern(0), getSPattern(0)),
+                String.join("  ", getOPattern(1), getOPattern(1), getPPattern(1), getSPattern(1)),
+                String.join("  ", getOPattern(2), getOPattern(2), getPPattern(2), getSPattern(2)),
+                String.join("  ", getOPattern(3), getOPattern(3), getPPattern(3), getSPattern(3)),
+                String.join("  ", getOPattern(4), getOPattern(4), getPPattern(4), getSPattern(4)),
+                String.join("  ", getOPattern(5), getOPattern(5), getPPattern(5), getSPattern(5)),
+                String.join("  ", getOPattern(6), getOPattern(6), getPPattern(6), getSPattern(6))
         };
 
-        // Enhanced For-Loop to iterate through the cleanly initialized array
+        // Loop-Based Rendering
         for (String line : bannerLines) {
             System.out.println(line);
         }
+    }
+
+    // ==========================================
+    // Helper Methods (Static Methods)
+    // ==========================================
+
+    /**
+     * Returns the specific line for the letter 'O'
+     */
+    public static String getOPattern(int line) {
+        String[] o = {
+                "  ***** ",
+                " * * ",
+                "* *",
+                "* *",
+                "* *",
+                " * * ",
+                "  ***** "
+        };
+        return o[line];
+    }
+
+    /**
+     * Returns the specific line for the letter 'P'
+     */
+    public static String getPPattern(int line) {
+        String[] p = {
+                "******* ",
+                "* * ",
+                "* * ",
+                "******* ",
+                "* ",
+                "* ",
+                "* "
+        };
+        return p[line];
+    }
+
+    /**
+     * Returns the specific line for the letter 'S'
+     */
+    public static String getSPattern(int line) {
+        String[] s = {
+                "  ***** ",
+                " * * ",
+                "* ",
+                "  ***** ",
+                "       * ",
+                " * * ",
+                "  ***** "
+        };
+        return s[line];
     }
 }
