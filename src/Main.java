@@ -1,54 +1,90 @@
 /**
  * OOPS Banner App
- * UC6: Refactored to use Static Helper Methods for Modularization and Reusability.
- * This version uses the DRY principle by defining letter patterns in methods.
+ * Goal: Evolve from simple console output to an Object-Oriented
+ * architecture using Inner Classes and Encapsulation.
  * * @author Your Name
- * @version 1.5
+ * @version 1.7
  */
 public class OOPSBannerApp {
 
-    public static void main(String[] args) {
+    // ==========================================
+    // PART 2: INNER STATIC CLASS
+    // ==========================================
+    /**
+     * CharacterPatternMap encapsulates a character and its banner representation.
+     * Principle: ENCAPSULATION & SINGLE RESPONSIBILITY
+     */
+    public static class CharacterPatternMap {
+        private char character;
+        private String[] pattern;
 
-        // ==========================================
-        // UC1: Print OOPS to Console
-        // ==========================================
-        System.out.println("--- UC1: Simple Output ---");
-        System.out.println("OOPS");
+        /**
+         * Constructor to initialize the object state.
+         * @param character The character to represent
+         * @param pattern Array of 7 strings forming the banner
+         */
+        public CharacterPatternMap(char character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
+        }
 
-        System.out.println("\n");
+        /**
+         * Getter for the character.
+         * @return char
+         */
+        public char getCharacter() {
+            return character;
+        }
 
-        // ==========================================
-        // UC6: Render OOPS as Banner using Functions (Refactored)
-        // ==========================================
-        System.out.println("--- UC6: Banner Output (Modular Functions) ---");
-
-        // Array Initialization calling our helper methods
-        // Notice getOPattern() is called twice - Reusability in action!
-        String[] bannerLines = {
-                String.join("  ", getOPattern(0), getOPattern(0), getPPattern(0), getSPattern(0)),
-                String.join("  ", getOPattern(1), getOPattern(1), getPPattern(1), getSPattern(1)),
-                String.join("  ", getOPattern(2), getOPattern(2), getPPattern(2), getSPattern(2)),
-                String.join("  ", getOPattern(3), getOPattern(3), getPPattern(3), getSPattern(3)),
-                String.join("  ", getOPattern(4), getOPattern(4), getPPattern(4), getSPattern(4)),
-                String.join("  ", getOPattern(5), getOPattern(5), getPPattern(5), getSPattern(5)),
-                String.join("  ", getOPattern(6), getOPattern(6), getPPattern(6), getSPattern(6))
-        };
-
-        // Loop-Based Rendering
-        for (String line : bannerLines) {
-            System.out.println(line);
+        /**
+         * Getter for a specific line of the pattern.
+         * @param line Index of the row (0-6)
+         * @return String representing one row of the banner
+         */
+        public String getPatternLine(int line) {
+            return pattern[line];
         }
     }
 
     // ==========================================
-    // Helper Methods (Static Methods)
+    // PART 4: MAIN METHOD (ENTRY POINT)
+    // ==========================================
+    public static void main(String[] args) {
+
+        // --- UC1: Simple Output ---
+        System.out.println("OOPS");
+        System.out.println();
+
+        // --- UC7: Object-Oriented Banner Output ---
+        // 1. Instantiate objects for each character pattern
+        CharacterPatternMap oChar = new CharacterPatternMap('O', getOPattern());
+        CharacterPatternMap pChar = new CharacterPatternMap('P', getPPattern());
+        CharacterPatternMap sChar = new CharacterPatternMap('S', getSPattern());
+
+        // 2. Create an array of objects to define the word "OOPS"
+        // Principle: ARRAYS OF OBJECTS
+        CharacterPatternMap[] bannerObjects = { oChar, oChar, pChar, sChar };
+
+        // 3. Render the banner using StringBuilder for efficiency
+        // Principle: MODULARITY & SEPARATION OF CONCERNS
+        for (int i = 0; i < 7; i++) {
+            StringBuilder lineBuilder = new StringBuilder();
+            for (CharacterPatternMap cp : bannerObjects) {
+                lineBuilder.append(cp.getPatternLine(i)).append("  ");
+            }
+            System.out.println(lineBuilder.toString());
+        }
+    }
+
+    // ==========================================
+    // PART 3: UTILITY STATIC METHODS
     // ==========================================
 
     /**
-     * Returns the specific line for the letter 'O'
+     * @return 7-line pattern for 'O'
      */
-    public static String getOPattern(int line) {
-        String[] o = {
+    public static String[] getOPattern() {
+        return new String[] {
                 "  ***** ",
                 " * * ",
                 "* *",
@@ -57,14 +93,13 @@ public class OOPSBannerApp {
                 " * * ",
                 "  ***** "
         };
-        return o[line];
     }
 
     /**
-     * Returns the specific line for the letter 'P'
+     * @return 7-line pattern for 'P'
      */
-    public static String getPPattern(int line) {
-        String[] p = {
+    public static String[] getPPattern() {
+        return new String[] {
                 "******* ",
                 "* * ",
                 "* * ",
@@ -73,22 +108,20 @@ public class OOPSBannerApp {
                 "* ",
                 "* "
         };
-        return p[line];
     }
 
     /**
-     * Returns the specific line for the letter 'S'
+     * @return 7-line pattern for 'S'
      */
-    public static String getSPattern(int line) {
-        String[] s = {
+    public static String[] getSPattern() {
+        return new String[] {
                 "  ***** ",
                 " * * ",
-                "* ",
+                " * ",
                 "  ***** ",
                 "       * ",
                 " * * ",
                 "  ***** "
         };
-        return s[line];
     }
 }
