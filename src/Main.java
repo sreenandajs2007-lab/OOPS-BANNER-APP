@@ -1,53 +1,29 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * OOPS Banner App
- * Goal: Evolve from simple console output to an Object-Oriented
- * architecture using Inner Classes and Encapsulation.
+ * OOPS Banner App - Final Evolution
+ * UC8: Utilizing HashMap for efficient pattern management and rendering.
  * * @author Your Name
- * @version 1.7
+ * @version 1.8
  */
 public class OOPSBannerApp {
 
     // ==========================================
-    // PART 2: INNER STATIC CLASS
+    // PART 1: MAIN CLASS & DATA STRUCTURE
     // ==========================================
-    /**
-     * CharacterPatternMap encapsulates a character and its banner representation.
-     * Principle: ENCAPSULATION & SINGLE RESPONSIBILITY
-     */
-    public static class CharacterPatternMap {
-        private char character;
-        private String[] pattern;
+    // A Map to store character patterns for centralized management
+    private static final Map<Character, String[]> bannerMap = new HashMap<>();
 
-        /**
-         * Constructor to initialize the object state.
-         * @param character The character to represent
-         * @param pattern Array of 7 strings forming the banner
-         */
-        public CharacterPatternMap(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
-
-        /**
-         * Getter for the character.
-         * @return char
-         */
-        public char getCharacter() {
-            return character;
-        }
-
-        /**
-         * Getter for a specific line of the pattern.
-         * @param line Index of the row (0-6)
-         * @return String representing one row of the banner
-         */
-        public String getPatternLine(int line) {
-            return pattern[line];
-        }
+    static {
+        // Static initializer block to populate the map when the class loads
+        bannerMap.put('O', getOPattern());
+        bannerMap.put('P', getPPattern());
+        bannerMap.put('S', getSPattern());
     }
 
     // ==========================================
-    // PART 4: MAIN METHOD (ENTRY POINT)
+    // PART 3: MAIN METHOD
     // ==========================================
     public static void main(String[] args) {
 
@@ -55,73 +31,48 @@ public class OOPSBannerApp {
         System.out.println("OOPS");
         System.out.println();
 
-        // --- UC7: Object-Oriented Banner Output ---
-        // 1. Instantiate objects for each character pattern
-        CharacterPatternMap oChar = new CharacterPatternMap('O', getOPattern());
-        CharacterPatternMap pChar = new CharacterPatternMap('P', getPPattern());
-        CharacterPatternMap sChar = new CharacterPatternMap('S', getSPattern());
+        // --- UC8: Map-Based Banner Output ---
+        System.out.println("--- UC8: Banner Output (HashMap & Modular Function) ---");
 
-        // 2. Create an array of objects to define the word "OOPS"
-        // Principle: ARRAYS OF OBJECTS
-        CharacterPatternMap[] bannerObjects = { oChar, oChar, pChar, sChar };
+        // We can now print any word that exists in our map!
+        displayBanner("OOPS");
+    }
 
-        // 3. Render the banner using StringBuilder for efficiency
-        // Principle: MODULARITY & SEPARATION OF CONCERNS
+    // ==========================================
+    // PART 2: UTILITY STATIC METHODS
+    // ==========================================
+
+    /**
+     * Renders the provided string as a banner using nested loops.
+     * @param message The word to display (e.g., "OOPS")
+     */
+    public static void displayBanner(String message) {
+        // Outer loop for each of the 7 lines of the banner
         for (int i = 0; i < 7; i++) {
             StringBuilder lineBuilder = new StringBuilder();
-            for (CharacterPatternMap cp : bannerObjects) {
-                lineBuilder.append(cp.getPatternLine(i)).append("  ");
+
+            // Inner loop to iterate through each character in the message
+            for (char c : message.toUpperCase().toCharArray()) {
+                if (bannerMap.containsKey(c)) {
+                    lineBuilder.append(bannerMap.get(c)[i]).append("  ");
+                }
             }
             System.out.println(lineBuilder.toString());
         }
     }
 
-    // ==========================================
-    // PART 3: UTILITY STATIC METHODS
-    // ==========================================
-
-    /**
-     * @return 7-line pattern for 'O'
-     */
+    /** @return 7-line pattern for 'O' */
     public static String[] getOPattern() {
-        return new String[] {
-                "  ***** ",
-                " * * ",
-                "* *",
-                "* *",
-                "* *",
-                " * * ",
-                "  ***** "
-        };
+        return new String[] { "  ***** ", " * * ", "* *", "* *", "* *", " * * ", "  ***** " };
     }
 
-    /**
-     * @return 7-line pattern for 'P'
-     */
+    /** @return 7-line pattern for 'P' */
     public static String[] getPPattern() {
-        return new String[] {
-                "******* ",
-                "* * ",
-                "* * ",
-                "******* ",
-                "* ",
-                "* ",
-                "* "
-        };
+        return new String[] { "******* ", "* * ", "* * ", "******* ", "* ", "* ", "* " };
     }
 
-    /**
-     * @return 7-line pattern for 'S'
-     */
+    /** @return 7-line pattern for 'S' */
     public static String[] getSPattern() {
-        return new String[] {
-                "  ***** ",
-                " * * ",
-                " * ",
-                "  ***** ",
-                "       * ",
-                " * * ",
-                "  ***** "
-        };
+        return new String[] { "  ***** ", " * * ", "* ", "  ***** ", "       *", " * * ", "  ***** " };
     }
 }
