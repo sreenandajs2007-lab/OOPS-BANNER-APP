@@ -1,9 +1,9 @@
 /**
  * OOPS Banner App
- * UC4: Refactored to use a String Array and an Enhanced For-Loop
- * to eliminate repetitive print statements.
+ * UC5: Refactored to use Inline Array Initialization for conciseness.
+ * Combining declaration, initialization, and String.join() in one statement.
  * * @author Your Name
- * @version 1.3
+ * @version 1.4
  */
 public class OOPSBannerApp {
 
@@ -18,26 +18,24 @@ public class OOPSBannerApp {
         System.out.println("\n");
 
         // ==========================================
-        // UC4: Render OOPS as Banner using String Array and Loop
-        // (Refactored from UC3 to remove repetitive print calls)
+        // UC5: Render OOPS as Banner using Inline Array Initialization
+        // (Refactored from UC4 to be more concise and readable)
         // ==========================================
-        System.out.println("--- UC4: Banner Output (Array & Loop) ---");
+        System.out.println("--- UC5: Banner Output (Inline Initialization) ---");
 
-        // 1. Array Creation & Population
-        // We create a String array of size 7 to hold each line of the banner.
-        String[] bannerLines = new String[7];
+        // Using {} braces to initialize the array and populate it immediately.
+        // Each element calls String.join() to build the specific line.
+        String[] bannerLines = {
+                String.join("", "  ***** ", "  ", "  ***** ", "  ", "******* ", "  ", "  ***** "),
+                String.join("", " * * ", "  ", " * * ", "  ", "* * ", "  ", " * * "),
+                String.join("", "* *", "  ", "* *", "  ", "* * ", "  ", "* "),
+                String.join("", "* *", "  ", "* *", "  ", "******* ", "  ", "  ***** "),
+                String.join("", "* *", "  ", "* *", "  ", "* ", "  ", "       * "),
+                String.join("", " * * ", "  ", " * * ", "  ", "* ", "  ", " * * "),
+                String.join("", "  ***** ", "  ", "  ***** ", "  ", "* ", "  ", "  ***** ")
+        };
 
-        // 2. Populate the array using String.join() as established in UC3
-        bannerLines[0] = String.join("", "  ***** ", "  ", "  ***** ", "  ", "******* ", "  ", "  ***** ");
-        bannerLines[1] = String.join("", " * * ", "  ", " * * ", "  ", "* * ", "  ", " * * ");
-        bannerLines[2] = String.join("", "* *", "  ", "* *", "  ", "* * ", "  ", "* ");
-        bannerLines[3] = String.join("", "* *", "  ", "* *", "  ", "******* ", "  ", "  ***** ");
-        bannerLines[4] = String.join("", "* *", "  ", "* *", "  ", "* ", "  ", "       *");
-        bannerLines[5] = String.join("", " * * ", "  ", " * * ", "  ", "* ", "  ", " * * ");
-        bannerLines[6] = String.join("", "  ***** ", "  ", "  ***** ", "  ", "* ", "  ", "  ***** ");
-
-        // 3. Enhanced For-Loop (Loop Iteration)
-        // Instead of 7 print statements, we use one loop to traverse the array.
+        // Enhanced For-Loop to iterate through the cleanly initialized array
         for (String line : bannerLines) {
             System.out.println(line);
         }
